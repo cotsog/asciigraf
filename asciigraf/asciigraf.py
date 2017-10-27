@@ -39,9 +39,9 @@ def graph_from_ascii(network_string):
             for pos_offset in EDGE_CHAR_NEIGHBOURS[char]
             if pos+pos_offset in edge_char_to_edge_map
         ]  # assume for now these are all `-` characters
-
+        print(pos, char, neighbors_in_edges)
         if len(neighbors_in_edges) == 1:  # Add this node to the edge
-            neighbor = neighbors_in_edges[0]
+            neighbor, = neighbors_in_edges
             edge_char_to_edge_map[pos] = edge_char_to_edge_map[neighbor]
             edge_char_to_edge_map[pos]["points"].append(pos)
         elif len(neighbors_in_edges) == 0:  # Make a new edge
@@ -51,6 +51,8 @@ def graph_from_ascii(network_string):
             raise BadEdgeException("Edge character '{}' at <{}> has too"
                                    "many neighbors.".format(char, pos))
 
+        from pprint import pprint; pprint(edge_char_to_edge_map)
+        print("\n")
         neighboring_nodes = [
             node_chars[pos+pos_offset]
             for pos_offset in EDGE_CHAR_NEIGHBOURS[char]

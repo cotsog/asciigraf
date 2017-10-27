@@ -1,7 +1,8 @@
+import pytest
 from collections import OrderedDict
 
 from asciigraf import graph_from_ascii
-from asciigraf.asciigraf import node_iter, Point
+from asciigraf.asciigraf import node_iter, Point, BadEdgeException
 
 
 def test_ascii_positions():
@@ -154,3 +155,16 @@ def test_line_lengths():
         ("n1", "n2", OrderedDict([("length", 10)])),
         ("n1", "n4", OrderedDict([("length", 3)])),
     ]
+
+
+def test_bad_edge_exception():
+    with pytest.raises(BadEdgeException):
+        graph_from_ascii("""
+                 C
+                 |
+                 |
+            A----|
+
+
+
+                """)
